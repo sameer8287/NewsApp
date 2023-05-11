@@ -3,8 +3,13 @@ import 'package:flutter/material.dart';
 import '../models/caurisolCardModel.dart';
 
 class CategoryCard extends StatefulWidget {
-  CategoryCard({super.key, this.data});
   CauroisalCardModel? data;
+  final VoidCallback ontap;
+  CategoryCard({super.key, 
+  this.data,
+  required this.ontap});
+
+  
 
   @override
   State<CategoryCard> createState() => _CategoryCardState();
@@ -14,6 +19,7 @@ class _CategoryCardState extends State<CategoryCard> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: widget.ontap,
       child: Container(
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:news_app/apiServices/generalApiCall.dart';
+import 'package:news_app/views/detailPage.dart';
 import 'package:news_app/views/landing_homepage.dart';
 import 'apiServices/topHeadlineApiCall.dart';
 

@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class BottomBar extends ChangeNotifier{
-  // int indexProvider = StateProvider((ref) => 0);
+class BottomProvidr extends ChangeNotifier {
+  int _pageIndex = 0;
 
-  set setIndex(int indx)
-  {
-    // ref.read(indexProvider.state).state = indx;
-    // indexProvider =indx as StateProvider<int>;
+  // var btmIndex = StateProvider<int>((ref) => 0);
+  int get pageIndex => _pageIndex;
+  set pageIndex(int indx) {
+    _pageIndex = indx;
+    notifyListeners();
   }
 }
 
-final bottmBar = ChangeNotifierProvider<BottomBar>((ref) => BottomBar());
+// var indexProvider = StateProvider<int>((ref) => 0);
+//
+final bottmBar =
+    ChangeNotifierProvider<BottomProvidr>((ref) => BottomProvidr());

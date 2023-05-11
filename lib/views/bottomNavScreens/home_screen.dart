@@ -1,15 +1,27 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:news_app/components/categoryCard.dart';
 import 'package:news_app/main.dart';
+// import 'package:news_app/views/Category/bussiness.dart';
+// import 'package:news_app/views/Category/entertainment.dart';
+import 'package:news_app/views/Category/reusableCategoryPage.dart';
+// import 'package:news_app/views/Category/health.dart';
+// import 'package:news_app/views/Category/science.dart';
+// import 'package:news_app/views/Category/sports.dart';
+// import 'package:news_app/views/Category/technology.dart';
 
 import '../../models/caurisolCardModel.dart';
+import 'package:news_app/components/reusableCard.dart';
 
 class HomeScreen extends ConsumerWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+
+  List<Widget> categoryList = [];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -43,8 +55,18 @@ class HomeScreen extends ConsumerWidget {
           SizedBox(height: displayHeight * 0.02),
           CarouselSlider.builder(
               itemCount: CauroisalCardModel.lst.length,
-              itemBuilder: (context, index, realIndex) =>
-                  CategoryCard(data: CauroisalCardModel.lst[index]),
+              itemBuilder: (context, index, realIndex) => CategoryCard(
+                  data: CauroisalCardModel.lst[index],
+                  ontap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) {
+                        return reusableCategoryCard(
+                          category:
+                              CauroisalCardModel.lst[index].Data.toString(),
+                        );
+                      },
+                    ));
+                  }),
               options: CarouselOptions(
                   autoPlay: true,
                   aspectRatio: 2.0,
@@ -73,72 +95,15 @@ class HomeScreen extends ConsumerWidget {
               data: (data) {
                 return ListView.builder(
                   itemCount: 10,
-                  itemBuilder: (context, index) => Card(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 6, right: 6),
-                      child: Container(
-                        width: displayWidth,
-                        height: displayHeight * 0.15,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(13)),
-                        child: Row(
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  height: displayHeight * 0.1,
-                                  width: displayWidth * 0.3,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                              data.articles[index].image),
-                                          fit: BoxFit.cover),
-                                      borderRadius: BorderRadius.circular(17)),
-                                )
-                              ],
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Text(
-                                      data.articles[index].title,
-                                      overflow: TextOverflow.clip,
-                                      maxLines: 3,
-                                      // maxLines: 10,
-                                      // softWrap: true,
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      data.articles[index].description,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        'Source' +
-                                            ' - ' +
-                                            data.articles[index].source.name,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(fontSize: 12),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  itemBuilder: (context, index) => reusableCard(
+                    newsUrl: data.articles[index].url,
+                      content: data.articles[index].content,
+                      displayWidth: displayWidth,
+                      displayHeight: displayHeight,
+                      ImageUrl: data.articles[index].image,
+                      title: data.articles[index].title,
+                      dsc: data.articles[index].description,
+                      source: data.articles[index].source.name),
                 );
               },
               error: (error, stackTrace) => Text(error.toString()),
