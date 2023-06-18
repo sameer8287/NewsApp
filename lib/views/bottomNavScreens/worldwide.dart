@@ -29,6 +29,7 @@ class _WordWidePageState extends ConsumerState<WordWidePage> {
                     itemCount: data.articles.length,
                     itemBuilder: (context, index) {
                       return reusableCard(
+                          id: '0',
                           newsUrl: data.articles[index].url,
                           content: data.articles[index].content,
                           displayWidth: displayWidth,
@@ -37,7 +38,6 @@ class _WordWidePageState extends ConsumerState<WordWidePage> {
                           title: data.articles[index].title,
                           dsc: data.articles[index].description,
                           source: data.articles[index].author);
-                      
                     });
               },
               error: (error, stackTrace) => Text(error.toString()),

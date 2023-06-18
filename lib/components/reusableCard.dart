@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/models/bookmarkData_model.dart';
 import 'package:news_app/views/detailPage.dart';
 
 class reusableCard extends StatelessWidget {
@@ -8,6 +9,7 @@ class reusableCard extends StatelessWidget {
   final String source;
   final String content;
   final String newsUrl;
+  final String id;
 
   const reusableCard(
       {super.key,
@@ -18,7 +20,8 @@ class reusableCard extends StatelessWidget {
       required this.dsc,
       required this.source,
       required this.content,
-      required this.newsUrl});
+      required this.newsUrl,
+      required this.id});
 
   final double displayWidth;
   final double displayHeight;
@@ -31,7 +34,7 @@ class reusableCard extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => DetailPage(
-                newsUrl: newsUrl,
+                  newsUrl: newsUrl,
                   title: title,
                   desc: dsc,
                   content: content,
@@ -91,9 +94,21 @@ class reusableCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(fontSize: 12),
                           ),
-                        )
+                        ),
                       ],
                     ),
+                  ),
+                ),
+                Visibility(
+                  visible: id == '0' ? false : true,
+                  child: Column(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            // delete(data[index]);
+                          },
+                          icon: Icon(Icons.delete))
+                    ],
                   ),
                 )
               ],

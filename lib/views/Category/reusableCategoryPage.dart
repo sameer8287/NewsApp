@@ -73,6 +73,7 @@ class _GeneralState extends ConsumerState<reusableCategoryCard> {
                       itemCount: data.articles.length,
                       itemBuilder: (context, index) {
                         return reusableCard(
+                          id: '0',
                             newsUrl: data.articles[index].url,
                             content: data.articles[index].content,
                             displayWidth: displayWidth,
@@ -81,76 +82,6 @@ class _GeneralState extends ConsumerState<reusableCategoryCard> {
                             title: data.articles[index].title,
                             dsc: data.articles[index].description,
                             source: data.articles[index].author);
-                        // Card(
-                        //   child: Padding(
-                        //       padding: const EdgeInsets.only(left: 6, right: 6),
-                        //       child: Container(
-                        //         width: displayWidth,
-                        //         height: displayHeight * 0.15,
-                        //         decoration: BoxDecoration(
-                        //             borderRadius: BorderRadius.circular(13)),
-                        //         child: Row(
-                        //           children: [
-                        //             Column(
-                        //               mainAxisAlignment:
-                        //                   MainAxisAlignment.center,
-                        //               crossAxisAlignment:
-                        //                   CrossAxisAlignment.center,
-                        //               children: [
-                        //                 Container(
-                        //                   height: displayHeight * 0.1,
-                        //                   width: displayWidth * 0.3,
-                        //                   decoration: BoxDecoration(
-                        //                       image: DecorationImage(
-                        //                           image: NetworkImage(data
-                        //                               .articles[index]
-                        //                               .urlToImage),
-                        //                           fit: BoxFit.cover),
-                        //                       borderRadius:
-                        //                           BorderRadius.circular(17)),
-                        //                 )
-                        //               ],
-                        //             ),
-                        //             Expanded(
-                        //               child: Padding(
-                        //                 padding: const EdgeInsets.all(8.0),
-                        //                 child: Column(
-                        //                   mainAxisAlignment:
-                        //                       MainAxisAlignment.spaceEvenly,
-                        //                   children: [
-                        //                     Text(
-                        //                       data.articles[index].title,
-                        //                       overflow: TextOverflow.clip,
-                        //                       maxLines: 3,
-                        //                       // maxLines: 10,
-                        //                       // softWrap: true,
-                        //                       style: TextStyle(
-                        //                           fontSize: 15,
-                        //                           fontWeight: FontWeight.bold),
-                        //                     ),
-                        //                     Text(
-                        //                       data.articles[index].description,
-                        //                       overflow: TextOverflow.ellipsis,
-                        //                     ),
-                        //                     Align(
-                        //                       alignment: Alignment.centerLeft,
-                        //                       child: Text(
-                        //                         'Source' +
-                        //                             ' - ' +
-                        //                             data.articles[index].source
-                        //                                 .name,
-                        //                         overflow: TextOverflow.ellipsis,
-                        //                         style: TextStyle(fontSize: 12),
-                        //                       ),
-                        //                     )
-                        //                   ],
-                        //                 ),
-                        //               ),
-                        //             )
-                        //           ],
-                        //         ),
-                        //       )),
-                        // );
                       });
                 },
                 error: (error, stackTrace) => Text(error.toString()),

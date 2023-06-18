@@ -96,6 +96,7 @@ class HomeScreen extends ConsumerWidget {
                 return ListView.builder(
                   itemCount: 10,
                   itemBuilder: (context, index) => reusableCard(
+                    id: '0',
                     newsUrl: data.articles[index].url,
                       content: data.articles[index].content,
                       displayWidth: displayWidth,

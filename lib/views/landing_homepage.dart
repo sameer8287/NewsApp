@@ -7,7 +7,6 @@ import 'package:news_app/views/bottomNavScreens/home_screen.dart';
 import 'package:news_app/views/bottomNavScreens/userprofile.dart';
 import 'package:news_app/views/bottomNavScreens/worldwide.dart';
 import 'package:news_app/components/bottom_nav_bar.dart';
-
 import '../provider/bottom_bar.dart';
 
 class LandingHomeScreen extends ConsumerWidget {

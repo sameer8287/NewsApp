@@ -1,5 +1,8 @@
 // import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:news_app/boxes/boxes.dart';
+import 'package:news_app/models/bookmarkData_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailPage extends StatelessWidget {
@@ -8,7 +11,7 @@ class DetailPage extends StatelessWidget {
   final String content;
   final String author;
   final String? url;
-  final String ? newsUrl;
+  final String? newsUrl;
   DetailPage(
       {super.key,
       required this.title,
@@ -19,19 +22,17 @@ class DetailPage extends StatelessWidget {
       required this.newsUrl});
 
 // [SliverAppBar]s are typically used in [CustomScrollView.slivers], which in
-   
+
   //  final String  ul =Uri.parse(
   //   'https://stackoverflow.com/questions/47147973/networkimage-cannot-be-assigned-to-type-widget'
-  //   ).toString(); 
+  //   ).toString();
 
-  _launcherurl() async{
-    const url = "https://stackoverflow.com/questions/47147973/networkimage-cannot-be-assigned-to-type-widget";
-    if(await canLaunchUrl(Uri.http(url)))
-    {
+  _launcherurl() async {
+    const url =
+        "https://stackoverflow.com/questions/47147973/networkimage-cannot-be-assigned-to-type-widget";
+    if (await canLaunchUrl(Uri.http(url))) {
       await launchUrl(Uri.http(url));
-    }
-    else
-    {
+    } else {
       throw "Cloud not";
     }
   }
@@ -53,12 +54,40 @@ class DetailPage extends StatelessWidget {
                         onTap: () {
                           Navigator.pop(context);
                         },
-                        child: const Icon(Icons.close, color: Colors.black),
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child:
+                                  const Icon(Icons.close, color: Colors.black),
+                            )),
                       ),
                       GestureDetector(
-                        onTap: () {},
-                        child:
-                            const Icon(Icons.abc_outlined, color: Colors.black),
+                        onTap: () {
+                          EasyLoading.show();
+                          final data = BookmarkDataModel(
+                              Imageurl: url,
+                              url: newsUrl,
+                              title: title,
+                              content: content,
+                              description: desc);
+
+                          final box = Boxes.getData();
+                          box.add(data);
+                          data.save();
+                          EasyLoading.showSuccess('Saved');
+                        },
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: const Icon(Icons.bookmark_add_outlined,
+                                  color: Colors.black),
+                            )),
                       ),
                     ],
                   )),
@@ -75,6 +104,9 @@ class DetailPage extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       child: Stack(
                         children: [
+                          SizedBox(
+                            height: 10,
+                          ),
                           Container(
                               height: MediaQuery.of(context).size.height * 0.39,
                               width: MediaQuery.of(context).size.width,
@@ -226,11 +258,15 @@ class DetailPage extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15), color: Colors.black),
               child: FloatingActionButton(
-                onPressed: () {
+                onPressed: () async {
                   print(newsUrl);
                   // _launchUrl();
-                  _launcherurl;                
-                  
+                  final Uri url = Uri.parse(newsUrl.toString());
+                  if (await canLaunchUrl(url)) {
+                    await launchUrl(url);
+                  } else {
+                    throw Exception('Could not launch url');
+                  }
                 },
                 backgroundColor: Colors.transparent,
                 elevation: 0.0,
